@@ -92,7 +92,30 @@ class JorgeComponentKtTest {
         composeTestRule.onNodeWithText("Jorge").assertIsOff()
         composeTestRule.onNodeWithText("Jorge").assertTextEquals("")
         composeTestRule.onNodeWithText("Jorge").assertTextContains("Jorge")
+    }
 
+    @Test
+    fun whenComponentStart_thenVerifyContentIsJorge() {
+        composeTestRule.setContent {
+            JorgeComponent()
+        }
 
+        composeTestRule.onNodeWithText("jorge", ignoreCase = true).assertExists()
+        composeTestRule.onNodeWithTag("textFieldName").assertTextContains("Jorge")
+    }
+
+    @Test
+    fun whenNameIsAdded_thenVerifyTextContainGreeting() {
+        composeTestRule.setContent {
+            JorgeComponent()
+        }
+
+        //Mejor con el replace, siguiente forma. Esto podría dar error
+        composeTestRule.onNodeWithTag("textFieldName").performTextClearance()
+        composeTestRule.onNodeWithTag("textFieldName").performTextInput("Pepe")
+        composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Te llamas Pepe")
+
+        composeTestRule.onNodeWithTag("textFieldName").performTextReplacement("Pepe")
+        composeTestRule.onNodeWithTag("textGreeting").assertTextEquals("Te llamas Pepe")
     }
 }
