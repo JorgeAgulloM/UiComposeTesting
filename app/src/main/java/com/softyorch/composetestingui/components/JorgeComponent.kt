@@ -1,21 +1,25 @@
 package com.softyorch.composetestingui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 
+@Preview
 @Composable
 fun JorgeComponent() {
-    Column(Modifier.fillMaxSize()) {
-        Text(text = "Jorge", Modifier.testTag("component1"))
-        Text(text = "Agulló", Modifier.testTag("component2"))
+    var name by rememberSaveable { mutableStateOf("Jorge") }
 
-        Image(imageVector = Icons.Default.Add, contentDescription = "imageDecorator")
+    Column(Modifier.fillMaxSize()) {
+        TextField(value = name, onValueChange = { name = it })
+        Text(text = "Te llamas $name")
+
     }
 }
